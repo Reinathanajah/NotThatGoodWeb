@@ -1,0 +1,57 @@
+@layer components {
+  .sf-popover-anchor {
+    position: relative;
+  }
+
+  .sf-popover-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: var(--z-popover);
+    padding: var(--space-4);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-overlay);
+    max-height: min(72dvh, 520px);
+    overflow-y: auto;
+  }
+
+  .sf-popover-panel--right {
+    left: auto;
+    right: 0;
+    min-width: 240px;
+  }
+
+  .sf-mega-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(210px, 1fr));
+    gap: var(--space-3);
+    width: min(760px, 90vw);
+  }
+
+  @media (min-width: 1200px) {
+    .sf-mega-grid {
+      grid-template-columns: repeat(3, minmax(210px, 1fr));
+    }
+  }
+
+  .sf-popover-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    min-height: var(--tap-min);
+    justify-content: center;
+  }
+
+  .sf-popover-item:hover {
+    background-color: var(--bg-surface-raised);
+    color: var(--accent);
+  }
+}

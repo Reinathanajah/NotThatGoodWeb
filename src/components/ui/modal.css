@@ -1,0 +1,23 @@
+@layer components {
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background-color: rgba(14, 16, 21, 0.76);
+  }
+
+  .modal-dialog {
+    width: 100%;
+    max-width: 560px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-overlay);
+    max-height: 85dvh;
+    overflow-y: auto;
+  }
+}

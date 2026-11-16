@@ -1,0 +1,94 @@
+@layer components {
+  .foundation-shell {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-5);
+    gap: var(--space-6);
+  }
+
+  .foundation-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .foundation-main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .foundation-card {
+    width: 100%;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .foundation-main .foundation-card {
+    max-width: 680px;
+  }
+
+  .foundation-lead {
+    color: var(--text-secondary);
+    max-width: 60ch;
+  }
+
+  .foundation-meta {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .foundation-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .foundation-meta-row dt {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .foundation-meta-row dd {
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  .foundation-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .foundation-field label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .foundation-field input {
+    min-height: var(--tap-min);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-body);
+  }
+
+  .foundation-field input[aria-invalid='true'] {
+    border-color: var(--status-error);
+  }
+
+  .foundation-field-error {
+    color: var(--status-error);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+}

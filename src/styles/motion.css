@@ -1,0 +1,45 @@
+@layer motion {
+  :root {
+    --ease-horizon: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-fast: 150ms;
+    --dur-mid: 280ms;
+    --dur-slow: 420ms;
+  }
+
+  .motion-surface {
+    transition:
+      background-color var(--dur-mid) var(--ease-horizon),
+      border-color var(--dur-mid) var(--ease-horizon),
+      transform var(--dur-fast) var(--ease-horizon),
+      opacity var(--dur-mid) var(--ease-horizon);
+  }
+
+  .motion-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .motion-press:active {
+    transform: translateY(1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .motion-lift:hover,
+    .motion-press:active {
+      transform: none;
+    }
+  }
+
+  :root[data-motion='paused'] .motion-lift:hover,
+  :root[data-motion='paused'] .motion-press:active {
+    transform: none;
+  }
+}

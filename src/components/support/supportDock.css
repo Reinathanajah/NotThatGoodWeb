@@ -1,0 +1,72 @@
+@layer components {
+  .workspace-footer {
+    border-top: 1px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    padding-block: var(--space-5);
+    padding-bottom: calc(var(--space-6) + 52px);
+  }
+
+  .workspace-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .workspace-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .workspace-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .support-dock {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: var(--z-sticky);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .support-drawer {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 54px);
+    z-index: var(--z-modal);
+    width: min(400px, calc(100vw - 2rem));
+    max-height: min(78dvh, 560px);
+    overflow-y: auto;
+    padding: var(--space-4);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  .support-textarea {
+    min-height: 96px;
+    padding: var(--space-3);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-body);
+    resize: vertical;
+  }
+
+  .support-textarea[aria-invalid='true'] {
+    border-color: var(--status-error);
+  }
+}

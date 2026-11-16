@@ -1,0 +1,101 @@
+@layer components {
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+    gap: var(--space-4);
+  }
+
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+    overflow: hidden;
+    transition: transform var(--dur-mid) var(--ease-horizon), border-color var(--dur-fast);
+  }
+
+  .course-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .course-artwork {
+    width: 100%;
+    height: 112px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .course-card-body {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .course-list-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+  }
+
+  .course-list-row:hover {
+    border-color: var(--accent);
+  }
+
+  .course-swatch {
+    width: 72px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .course-progress-track {
+    width: 100%;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background-color: var(--bg-surface-raised);
+    overflow: hidden;
+  }
+
+  .course-progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    border-radius: var(--radius-pill);
+  }
+
+  .recent-courses-rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+    gap: var(--space-3);
+  }
+
+  .course-link-title {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: var(--text-body);
+  }
+
+  .course-link-title:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .course-card:hover {
+      transform: none;
+    }
+  }
+}

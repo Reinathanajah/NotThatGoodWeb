@@ -1,0 +1,74 @@
+﻿@layer components {
+  .sf-container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+    min-width: 0;
+  }
+
+  .sf-surface {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    min-width: 0;
+  }
+
+  .sf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    padding: 0 var(--space-4);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .sf-btn--primary {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .sf-btn--primary:hover {
+    background-color: var(--accent-hover);
+  }
+
+  .sf-btn--secondary {
+    background-color: var(--bg-surface-raised);
+    border-color: var(--border-control);
+    color: var(--text-primary);
+  }
+
+  .sf-btn--secondary:hover {
+    border-color: var(--accent);
+  }
+
+  .sf-btn--ghost {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--text-primary);
+  }
+
+  .sf-btn--ghost:hover {
+    background-color: var(--bg-surface-raised);
+  }
+
+  .sf-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-control);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    background-color: var(--bg-surface-raised);
+  }
+}

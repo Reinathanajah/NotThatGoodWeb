@@ -1,0 +1,55 @@
+@layer tokens {
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --bg-canvas: #0E1015;
+    --bg-surface: #171A21;
+    --bg-surface-raised: #1F242E;
+    --bg-glass: rgba(23, 26, 33, 0.72);
+    --text-primary: #F4F1EA;
+    --text-secondary: #B9B4AA;
+    --border-subtle: #2B313E;
+    --border-control: #656E85;
+    --accent: #D4940A;
+    --accent-hover: #E5A51B;
+    --accent-ink: #14161B;
+    --focus-ring: #FBBF24;
+
+    /* Dusk sky horizon accents reserved for backdrop and overdue status */
+    --horizon-crimson: #9E2A2B;
+    --horizon-glow: #C43E32;
+    --horizon-sun: #F4E8C1;
+
+    --status-error: #F87171;
+    --status-success: #4ADE80;
+    --status-warning: #FBBF24;
+    --status-info: #60A5FA;
+    --shadow-overlay: 0 18px 42px rgba(0, 0, 0, 0.55);
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --bg-canvas: #F8F7F4;
+    --bg-surface: #FFFFFF;
+    --bg-surface-raised: #EFEDE8;
+    --bg-glass: rgba(255, 255, 255, 0.78);
+    --text-primary: #14161B;
+    --text-secondary: #494E59;
+    --border-subtle: #E2DFD7;
+    --border-control: #7E828C;
+    --accent: #8C5C00;
+    --accent-hover: #734B00;
+    --accent-ink: #FFFFFF;
+    --focus-ring: #8C5C00;
+
+    --horizon-crimson: #9E2A2B;
+    --horizon-glow: #B93829;
+    --horizon-sun: #F5E1A4;
+
+    --status-error: #B91C1C;
+    --status-success: #15803D;
+    --status-warning: #92400E;
+    --status-info: #1D4ED8;
+    --shadow-overlay: 0 16px 38px rgba(20, 22, 27, 0.14);
+  }
+}

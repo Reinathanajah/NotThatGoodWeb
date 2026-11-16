@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.neon
+.vercel
+node_modules
+dist
+dist-server
+uploads
+Captures
+.agents
+.git
+*.log
+*.md
+!README.md
+server/src/tests

@@ -1,0 +1,89 @@
+@layer components {
+  .utility-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-drawer);
+    background-color: rgba(14, 16, 21, 0.72);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .utility-drawer-panel {
+    width: min(420px, 94vw);
+    height: 100dvh;
+    overflow-y: auto;
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border-left: 1px solid var(--border-control);
+    box-shadow: var(--shadow-overlay);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .clock-readout-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-3);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+  }
+
+  .mini-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .mini-cal-head {
+    text-align: center;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding-bottom: 4px;
+  }
+
+  .mini-cal-day {
+    min-height: var(--tap-min);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .mini-cal-day--muted {
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  .mini-cal-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding-inline: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .mini-cal-day[aria-pressed='true'] {
+    border-color: var(--accent);
+    background-color: var(--bg-surface-raised);
+  }
+
+  .mini-cal-marker {
+    width: 16px;
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background-color: var(--accent);
+  }
+}

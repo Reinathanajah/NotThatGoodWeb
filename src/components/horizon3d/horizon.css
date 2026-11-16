@@ -1,0 +1,147 @@
+@layer components {
+  .horizon-stage {
+    --horizon-ridge-far: rgba(94, 24, 29, 0.52);
+    --horizon-ridge-mid: rgba(45, 16, 22, 0.78);
+    --horizon-ridge-near: rgba(14, 16, 21, 0.94);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-canvas);
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  :root[data-theme='light'] .horizon-stage {
+    --horizon-ridge-far: rgba(158, 42, 43, 0.16);
+    --horizon-ridge-mid: rgba(140, 92, 0, 0.18);
+    --horizon-ridge-near: rgba(34, 29, 27, 0.24);
+  }
+
+  .horizon-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .horizon-sky-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 34%, rgba(196, 62, 50, 0.56), transparent 62%),
+      linear-gradient(180deg, #0E1015 0%, #3E1217 48%, #7F2122 100%);
+  }
+
+  :root[data-theme='light'] .horizon-sky-gradient {
+    background:
+      radial-gradient(circle at 50% 34%, rgba(212, 148, 10, 0.24), transparent 60%),
+      linear-gradient(180deg, #F8F7F4 0%, #F2E8DC 55%, #E7D2C3 100%);
+  }
+
+  .horizon-sun-disc {
+    position: absolute;
+    left: 50%;
+    top: 14%;
+    width: clamp(140px, 24vw, 240px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--horizon-sun) 0%, rgba(244, 232, 193, 0.18) 68%, transparent 74%);
+    transform: translate3d(calc(-50% + var(--hx, 0) * 10px), calc(var(--hy, 0) * 6px), 0);
+    transition: transform var(--dur-mid) var(--ease-horizon);
+  }
+
+  .horizon-ridges {
+    position: absolute;
+    left: -4%;
+    width: 108%;
+    bottom: 0;
+    height: 62%;
+    transition: transform var(--dur-mid) var(--ease-horizon);
+  }
+
+  .horizon-ridges--far {
+    transform: translate3d(calc(var(--hx, 0) * 8px), calc(var(--hy, 0) * 5px), 0);
+  }
+
+  .horizon-ridges--mid {
+    height: 50%;
+    transform: translate3d(calc(var(--hx, 0) * 16px), calc(var(--hy, 0) * 10px), 0);
+  }
+
+  .horizon-ridges--near {
+    height: 36%;
+    transform: translate3d(calc(var(--hx, 0) * 26px), calc(var(--hy, 0) * 14px), 0);
+  }
+
+  .horizon-canvas-wrap {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-height: 290px;
+  }
+
+  .horizon-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+
+  .horizon-canvas:active {
+    cursor: grabbing;
+  }
+
+  .horizon-toolbar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-glass);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .horizon-beacon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .horizon-beacon-btn {
+    min-height: var(--tap-min);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-control);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .horizon-beacon-btn[aria-pressed='true'] {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :root[data-motion='paused'] .horizon-ridges {
+    transform: none !important;
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .horizon-sun-disc,
+    .horizon-ridges {
+      transform: none !important;
+      transition: none;
+    }
+  }
+}

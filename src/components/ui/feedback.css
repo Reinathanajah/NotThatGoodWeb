@@ -1,0 +1,94 @@
+﻿@layer components {
+  .status-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+  }
+
+  .status-banner--error {
+    border-left-color: var(--status-error);
+  }
+
+  .status-banner--success {
+    border-left-color: var(--status-success);
+  }
+
+  .status-banner--info {
+    border-left-color: var(--status-info);
+  }
+
+  .status-banner--warning {
+    border-left-color: var(--status-warning);
+  }
+
+  .status-banner-body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+
+  .status-banner-title {
+    font-size: var(--text-body);
+    font-weight: 600;
+  }
+
+  .status-banner-desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-top: var(--space-1);
+  }
+
+  .skeleton-stack {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .skeleton-bar {
+    height: 16px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+
+  .status-banner--loading svg {
+    animation: sf-spin 1s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes sf-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes skeleton-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 0.95;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-banner--loading svg,
+    .skeleton-bar {
+      animation: none;
+    }
+
+    .skeleton-bar {
+      opacity: 0.8;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+@layer components {
+  .comms-notif-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+  }
+
+  .comms-notif-item--unread {
+    border-left-color: var(--accent);
+    background-color: var(--bg-surface-raised);
+  }
+
+  .msg-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  @media (min-width: 840px) {
+    .msg-split {
+      grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    }
+  }
+
+  .msg-conv-btn {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    text-align: left;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: var(--tap-min);
+  }
+
+  .msg-conv-btn--active {
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+    background-color: var(--bg-surface-raised);
+  }
+
+  .msg-bubble {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-canvas);
+    max-width: min(64ch, 92%);
+    display: grid;
+    gap: 4px;
+  }
+
+  .msg-bubble--mine {
+    margin-left: auto;
+    border-color: var(--accent);
+    background-color: var(--bg-surface-raised);
+  }
+
+  .msg-stream {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-height: 55dvh;
+    overflow-y: auto;
+    padding-right: var(--space-1);
+  }
+
+  .msg-mobile-hidden {
+    display: none;
+  }
+
+  @media (min-width: 840px) {
+    .msg-mobile-hidden {
+      display: flex;
+    }
+
+    .msg-mobile-back {
+      display: none;
+    }
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .profile-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    }
+  }
+
+  .qr-frame {
+    display: inline-block;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background-color: #ffffff;
+    border: 1px solid var(--border-control);
+  }
+}

@@ -120,7 +120,7 @@ export async function sendConversationMessage(
         recipients.map((recipientId) => ({
           userId: recipientId,
           type: 'new_message',
-          title: `Pesan baru dari ${sender?.fullName ?? 'Pengguna'}`,
+          title: `New message from ${sender?.fullName ?? 'Member'}`,
           body: body.slice(0, 200),
           actionUrl: `/messages/${conversationId}`,
         })),

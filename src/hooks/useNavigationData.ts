@@ -18,6 +18,15 @@ export function useNavigationData() {
   const editMode = user?.preferences.editMode ?? false
 
   useEffect(() => {
+    const onUnreadUpdate = (event: Event) => {
+      const next = (event as CustomEvent<number>).detail
+      if (typeof next === 'number') setUnreadCount(next)
+    }
+    window.addEventListener('sf:unread-count', onUnreadUpdate)
+    return () => window.removeEventListener('sf:unread-count', onUnreadUpdate)
+  }, [])
+
+  useEffect(() => {
     if (status !== 'authenticated') return
     const controller = new AbortController()
 

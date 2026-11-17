@@ -8,10 +8,12 @@ export interface CalendarEventDto {
   courseId: number | null
   categoryId: number | null
   groupId: number | null
+  userId: string | null
   moduleId: number | null
   startAt: string
   endAt: string | null
-  isOwnedByUser: boolean
+  courseTitle: string | null
+  courseCode: string | null
 }
 
 export interface CalendarViewDto {

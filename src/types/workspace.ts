@@ -21,7 +21,7 @@ export interface ConversationSummaryDto {
   isGroup: boolean
   createdAt: string
   participants: Array<{ id: string; fullName: string; role: string }>
-  lastMessage: { id: string; body: string; createdAt: string; senderName: string } | null
+  lastMessage: { id: string; senderUserId: string; body: string; createdAt: string } | null
 }
 
 export interface ChatMessageDto {
@@ -29,6 +29,12 @@ export interface ChatMessageDto {
   body: string
   createdAt: string
   sender: { id: string; fullName: string; role: string }
+}
+
+export interface ConversationDetailDto {
+  conversation: { id: string; title: string | null; isGroup: boolean; createdAt: string }
+  participants: Array<{ id: string; fullName: string; role: string }>
+  messages: ChatMessageDto[]
 }
 
 export interface StaticPageDto {

@@ -41,20 +41,28 @@ const PrivateFilesPage = lazy(() =>
 const QuizPage = lazy(() =>
   import('./pages/QuizPage.tsx').then((m) => ({ default: m.QuizPage })),
 )
+const CalendarPage = lazy(() =>
+  import('./pages/CalendarPage.tsx').then((m) => ({ default: m.CalendarPage })),
+)
+const NotificationsPage = lazy(() =>
+  import('./pages/NotificationsPage.tsx').then((m) => ({ default: m.NotificationsPage })),
+)
+const MessagesPage = lazy(() =>
+  import('./pages/MessagesPage.tsx').then((m) => ({ default: m.MessagesPage })),
+)
+const UserProfilePage = lazy(() =>
+  import('./pages/UserProfilePage.tsx').then((m) => ({ default: m.UserProfilePage })),
+)
 const WorkspacePreviewPage = lazy(() =>
   import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
 )
 
 const PLANNED_ROUTES = [
-  { path: '/notifications', title: 'Notifications' },
-  { path: '/messages', title: 'Messages' },
-  { path: '/calendar', title: 'Academic calendar' },
   { path: '/grades', title: 'Grades' },
   { path: '/reports/analytics', title: 'Learning analytics' },
   { path: '/reports/analytics/:key', title: 'Analytics detail' },
   { path: '/reports/learner-script', title: 'Learning analytics' },
   { path: '/reports/learner-script/:key', title: 'Analytics detail' },
-  { path: '/user/profile', title: 'User profile' },
   { path: '/static/:slug', title: 'Guide page' },
 ] as const
 
@@ -102,7 +110,12 @@ function App() {
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
               <Route path="/quizzes/:moduleId"><ProtectedRoute><QuizPage /></ProtectedRoute></Route>
+              <Route path="/calendar"><ProtectedRoute><CalendarPage /></ProtectedRoute></Route>
+              <Route path="/notifications"><ProtectedRoute><NotificationsPage /></ProtectedRoute></Route>
+              <Route path="/messages"><ProtectedRoute><MessagesPage /></ProtectedRoute></Route>
+              <Route path="/messages/:id"><ProtectedRoute><MessagesPage /></ProtectedRoute></Route>
               <Route path="/user/files"><ProtectedRoute><PrivateFilesPage /></ProtectedRoute></Route>
+              <Route path="/user/profile"><ProtectedRoute><UserProfilePage /></ProtectedRoute></Route>
               {PLANNED_ROUTES.map((item) => (
                 <Route key={item.path} path={item.path}>
                   <ProtectedRoute>

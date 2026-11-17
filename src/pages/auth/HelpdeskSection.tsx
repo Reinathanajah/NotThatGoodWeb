@@ -1,4 +1,6 @@
 import { ExternalLink, HelpCircle } from 'lucide-react'
+import { Link } from 'wouter'
+import { resolveGuideTarget } from '../../lib/guideHref.ts'
 import type { SupportStatusDto } from '../../types/workspace.ts'
 
 interface HelpdeskSectionProps {
@@ -7,8 +9,8 @@ interface HelpdeskSectionProps {
 
 export function HelpdeskSection({ support }: HelpdeskSectionProps) {
   const email = support?.helpdesk.email ?? 'support@silverfour.edu'
-  const locationUrl = support?.helpdesk.locationUrl ?? 'https://helpdesk.silverfour.edu/'
-  const guideUrl = support?.helpdesk.guideUrl ?? 'https://guides.silverfour.edu/'
+  const locationTarget = resolveGuideTarget(support?.helpdesk.locationUrl ?? '/static/platform_guides#helpdesk', true)
+  const guideTarget = resolveGuideTarget(support?.helpdesk.guideUrl ?? '/static/platform_guides', true)
 
   return (
     <details className="login-disclosure">
@@ -23,14 +25,26 @@ export function HelpdeskSection({ support }: HelpdeskSectionProps) {
           {support?.helpdesk.name ?? 'SilverFour Helpdesk'}.
         </p>
         <div className="sf-row">
-          <a href={locationUrl} target="_blank" rel="noreferrer noopener" className="sf-row">
-            <span>Helpdesk portal</span>
-            <ExternalLink size={15} aria-hidden="true" />
-          </a>
-          <a href={guideUrl} target="_blank" rel="noreferrer noopener" className="sf-row">
-            <span>Platform user guides</span>
-            <ExternalLink size={15} aria-hidden="true" />
-          </a>
+          {locationTarget.isExternal ? (
+            <a href={locationTarget.href} target="_blank" rel="noreferrer noopener" className="sf-row">
+              <span>Helpdesk portal</span>
+              <ExternalLink size={15} aria-hidden="true" />
+            </a>
+          ) : (
+            <Link href={locationTarget.href} className="sf-row">
+              <span>Helpdesk portal</span>
+            </Link>
+          )}
+          {guideTarget.isExternal ? (
+            <a href={guideTarget.href} target="_blank" rel="noreferrer noopener" className="sf-row">
+              <span>Platform user guides</span>
+              <ExternalLink size={15} aria-hidden="true" />
+            </a>
+          ) : (
+            <Link href={guideTarget.href} className="sf-row">
+              <span>Platform user guides</span>
+            </Link>
+          )}
         </div>
       </div>
     </details>

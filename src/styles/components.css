@@ -104,6 +104,19 @@
     font-size: var(--text-body);
   }
 
+  .assign-comment-textarea {
+    width: 100%;
+    min-height: 96px;
+    padding: var(--space-3);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-body);
+    resize: vertical;
+  }
+
   @media (max-width: 600px) {
     .dash-controls > .sf-row,
     .dash-controls .sf-stack,

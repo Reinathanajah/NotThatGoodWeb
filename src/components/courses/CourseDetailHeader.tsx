@@ -1,8 +1,8 @@
 import '../categories/categories.css'
-import { ChevronRight, Star } from 'lucide-react'
+import { Award, ChevronRight, Star } from 'lucide-react'
 import { Fragment } from 'react'
 import { Link } from 'wouter'
-import { resolveCategoryHref } from '../../lib/appRoutes.ts'
+import { resolveCategoryHref, resolveCourseHref } from '../../lib/appRoutes.ts'
 import type { CourseDetailDto } from '../../types/courses.ts'
 import { SafeHtmlBlock } from '../ui/SafeHtmlBlock.tsx'
 
@@ -62,21 +62,31 @@ export function CourseDetailHeader({
           ) : null}
         </div>
 
-        <button
-          type="button"
-          className="sf-btn sf-btn--secondary"
-          aria-pressed={course.enrollment.isStarred}
-          disabled={togglingStar}
-          onClick={onToggleStar}
-        >
-          <Star
-            size={18}
-            color={course.enrollment.isStarred ? 'var(--accent)' : 'currentColor'}
-            fill={course.enrollment.isStarred ? 'var(--accent)' : 'none'}
-            aria-hidden="true"
-          />
-          <span>{course.enrollment.isStarred ? 'Starred' : 'Star course'}</span>
-        </button>
+        <div className="sf-row">
+          <Link
+            href={`${resolveCourseHref(course)}/grades`}
+            className="sf-btn sf-btn--secondary"
+          >
+            <Award size={18} aria-hidden="true" />
+            <span>Course grades</span>
+          </Link>
+
+          <button
+            type="button"
+            className="sf-btn sf-btn--secondary"
+            aria-pressed={course.enrollment.isStarred}
+            disabled={togglingStar}
+            onClick={onToggleStar}
+          >
+            <Star
+              size={18}
+              color={course.enrollment.isStarred ? 'var(--accent)' : 'currentColor'}
+              fill={course.enrollment.isStarred ? 'var(--accent)' : 'none'}
+              aria-hidden="true"
+            />
+            <span>{course.enrollment.isStarred ? 'Starred' : 'Star course'}</span>
+          </button>
+        </div>
       </div>
 
       {pct !== null ? (

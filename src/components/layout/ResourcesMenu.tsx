@@ -1,6 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 import { Link } from 'wouter'
 import { useI18n } from '../../context/i18nContextValue.ts'
+import { resolveGuideTarget } from '../../lib/guideHref.ts'
 import type { NavigationItemDto, NavigationMenusDto } from '../../types/navigation.ts'
 
 interface ResourcesMenuProps {
@@ -23,11 +24,12 @@ function NavGroupSection({
       <p className="sf-text-muted" style={{ fontWeight: 700, paddingInline: 'var(--space-3)' }}>
         {heading}
       </p>
-      {items.map((item) =>
-        item.isExternal ? (
+      {items.map((item) => {
+        const target = resolveGuideTarget(item.href, item.isExternal)
+        return target.isExternal ? (
           <a
             key={item.id}
-            href={item.href}
+            href={target.href}
             target="_blank"
             rel="noreferrer noopener"
             className="sf-popover-item"
@@ -42,15 +44,15 @@ function NavGroupSection({
         ) : (
           <Link
             key={item.id}
-            href={item.href}
+            href={target.href}
             className="sf-popover-item"
             role="menuitem"
             onClick={onNavigate}
           >
             <span>{item.label}</span>
           </Link>
-        ),
-      )}
+        )
+      })}
     </div>
   )
 }

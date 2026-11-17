@@ -1,7 +1,8 @@
 import { ChevronRight, FolderPlus, FolderTree, LayoutGrid, List, Upload } from 'lucide-react'
-import { type FormEvent, useState } from 'react'
+import { useState } from 'react'
 import type { PrivateViewMode } from '../../hooks/usePrivateFiles.ts'
 import type { PrivateFilesListingDto } from '../../types/files.ts'
+import { NewFolderInlineForm } from './NewFolderInlineForm.tsx'
 import { StorageQuotaGauge } from './StorageQuotaGauge.tsx'
 
 interface QuotaAndToolbarCardProps {
@@ -34,17 +35,7 @@ export function QuotaAndToolbarCard({
   onOpenUploadPicker,
 }: QuotaAndToolbarCardProps) {
   const [showFolderForm, setShowFolderForm] = useState(false)
-  const [folderName, setFolderName] = useState('')
   const { quota } = listing
-
-  async function handleFolderSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const ok = await onCreateFolder(folderName)
-    if (ok) {
-      setFolderName('')
-      setShowFolderForm(false)
-    }
-  }
 
   return (
     <header className="sf-surface cat-header-card sf-stack" aria-labelledby="private-files-heading">
@@ -85,32 +76,13 @@ export function QuotaAndToolbarCard({
       />
 
       {showFolderForm ? (
-        <form className="pf-folder-form" onSubmit={handleFolderSubmit}>
-          <div className="foundation-field" style={{ flex: '1 1 240px' }}>
-            <label htmlFor="pf-new-folder-name">Folder name</label>
-            <input
-              id="pf-new-folder-name"
-              type="text"
-              maxLength={255}
-              value={folderName}
-              disabled={creatingFolder}
-              aria-invalid={folderError ? 'true' : undefined}
-              placeholder="e.g. Semester 4 Notes"
-              onChange={(e) => {
-                setFolderName(e.target.value)
-                if (folderError) onClearFolderError()
-              }}
-            />
-            {folderError ? (
-              <p className="foundation-field-error" role="alert">
-                {folderError}
-              </p>
-            ) : null}
-          </div>
-          <button type="submit" className="sf-btn sf-btn--primary" disabled={creatingFolder}>
-            {creatingFolder ? 'Creating...' : 'Create folder'}
-          </button>
-        </form>
+        <NewFolderInlineForm
+          creatingFolder={creatingFolder}
+          folderError={folderError}
+          onCreateFolder={onCreateFolder}
+          onClearFolderError={onClearFolderError}
+          onDone={() => setShowFolderForm(false)}
+        />
       ) : null}
 
       <div className="dash-controls">

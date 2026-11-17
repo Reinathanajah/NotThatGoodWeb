@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { StagedAttachment } from '../components/assignments/SubmissionFilesDropzone.tsx'
-import { ApiClientError } from '../services/apiClient.ts'
 import {
   fetchAssignmentDetail,
   upsertAssignmentSubmission,
 } from '../services/assignmentsApi.ts'
 import type { AssignmentDetailDto } from '../types/activities.ts'
 import type { StoredFileMetaDto } from '../types/files.ts'
-import { deriveEditability, validateBeforeSubmit } from './assignmentEditorHelpers.ts'
+import {
+  deriveEditability,
+  extractSubmissionSaveErrors,
+  mapInitialAttachments,
+  validateBeforeSubmit,
+} from './assignmentEditorHelpers.ts'
 
 export function useAssignmentEditor(moduleId: number) {
   const [trackedId, setTrackedId] = useState(moduleId)
@@ -40,14 +44,7 @@ export function useAssignmentEditor(moduleId: number) {
         if (controller.signal.aborted) return
         setDetail(res)
         setOnlineText(res.submissionStatus.onlineText ?? '')
-        setFiles(
-          res.submissionStatus.files.map((f) => ({
-            id: f.id,
-            name: f.displayName,
-            sizeBytes: f.sizeBytes,
-            license: f.license,
-          })),
-        )
+        setFiles(mapInitialAttachments(res))
         setDeclarationAccepted(res.submissionStatus.declarationAccepted)
         setLoadError(null)
         setLoading(false)
@@ -110,13 +107,10 @@ export function useAssignmentEditor(moduleId: number) {
         })
         onSuccess()
       } catch (err: unknown) {
-        if (err instanceof ApiClientError) {
-          setDeclarationError(err.getFieldError('declarationAccepted'))
-          setFilesError(err.getFieldError('fileIds'))
-          setSubmitError(err.message)
-        } else {
-          setSubmitError(err instanceof Error ? err.message : 'Unable to save submission')
-        }
+        const mapped = extractSubmissionSaveErrors(err)
+        setDeclarationError(mapped.declarationError)
+        setFilesError(mapped.filesError)
+        setSubmitError(mapped.submitError)
       } finally {
         setSaving(null)
       }

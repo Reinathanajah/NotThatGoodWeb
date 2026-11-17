@@ -6,6 +6,7 @@ import { buildDateTimeIsoUtc, getMonthDayKey, getTodayYmdInZone } from '../../li
 import type { CreateCalendarEventInput } from '../../types/calendar.ts'
 import type { CourseSummaryDto } from '../../types/courses.ts'
 import { StatusBanner } from '../ui/StatusBanner.tsx'
+import { EventFormFields } from './EventFormFields.tsx'
 
 interface NewEventModalProps {
   open: boolean
@@ -91,54 +92,21 @@ export function NewEventModal({ open, courses, onSubmit, onClose }: NewEventModa
 
         <form className="fp-panel sf-stack" onSubmit={handleSubmit}>
           {error ? <StatusBanner variant="error" title="Check event fields" message={error} /> : null}
-
-          <div className="foundation-field">
-            <label htmlFor="cal-ev-title">Event title</label>
-            <input id="cal-ev-title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
-
-          <div className="sf-row">
-            <div className="foundation-field" style={{ flex: '1 1 160px' }}>
-              <label htmlFor="cal-ev-date">Date</label>
-              <input id="cal-ev-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-            </div>
-            <div className="foundation-field" style={{ flex: '1 1 110px' }}>
-              <label htmlFor="cal-ev-start">Start</label>
-              <input id="cal-ev-start" type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-            </div>
-            <div className="foundation-field" style={{ flex: '1 1 110px' }}>
-              <label htmlFor="cal-ev-end">End (optional)</label>
-              <input id="cal-ev-end" type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
-            </div>
-          </div>
-
-          <div className="foundation-field">
-            <label htmlFor="cal-ev-course">Course (optional)</label>
-            <select
-              id="cal-ev-course"
-              className="dash-select"
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-            >
-              <option value="">Personal (no course linked)</option>
-              {courses.map((c) => (
-                <option key={c.id} value={String(c.id)}>
-                  {c.code} · {c.title}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="foundation-field">
-            <label htmlFor="cal-ev-desc">Notes (optional)</label>
-            <textarea
-              id="cal-ev-desc"
-              className="assign-comment-textarea"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
+          <EventFormFields
+            title={title}
+            date={date}
+            startTime={startTime}
+            endTime={endTime}
+            courseId={courseId}
+            description={description}
+            courses={courses}
+            onTitleChange={setTitle}
+            onDateChange={setDate}
+            onStartTimeChange={setStartTime}
+            onEndTimeChange={setEndTime}
+            onCourseIdChange={setCourseId}
+            onDescriptionChange={setDescription}
+          />
           <div className="sf-row" style={{ justifyContent: 'flex-end' }}>
             <button type="button" className="sf-btn sf-btn--ghost" onClick={onClose}>
               Cancel

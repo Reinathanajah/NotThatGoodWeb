@@ -26,6 +26,7 @@ export interface CourseGradebookItemDto {
   moduleType: string | null
   maxGrade: number
   weight: number
+  isHiddenFromStudents?: boolean
   score: number | null
   percentage: number | null
   formattedGrade: string

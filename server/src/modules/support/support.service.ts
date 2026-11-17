@@ -18,8 +18,8 @@ export function getSupportStatus(auth?: { userId: string; role: string }) {
     helpdesk: {
       name: 'SilverFour Helpdesk',
       email: 'support@silverfour.edu',
-      locationUrl: 'https://helpdesk.silverfour.edu/',
-      guideUrl: 'https://guides.silverfour.edu/',
+      locationUrl: '/static/platform_guides#helpdesk',
+      guideUrl: '/static/platform_guides',
     },
     accessibilityWidget: {
       enabled: true,

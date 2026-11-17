@@ -4,6 +4,7 @@ import { updateMyProfile } from '../../services/usersApi.ts'
 import type { AuthUserProfile, EmailVisibility, SupportedLang } from '../../types/auth.ts'
 import { StatusBanner } from '../ui/StatusBanner.tsx'
 import { ProfileActivitySummary } from './ProfileActivitySummary.tsx'
+import { ProfilePreferenceSelects } from './ProfilePreferenceSelects.tsx'
 import { getTimezoneSelectOptions } from './timezoneOptions.ts'
 
 interface ProfileEditFormProps {
@@ -103,42 +104,15 @@ export function ProfileEditForm({ user, onUpdated }: ProfileEditFormProps) {
           </div>
         </div>
 
-        <div className="sf-row">
-          <div className="foundation-field" style={{ flex: '1 1 200px' }}>
-            <label htmlFor="prof-tz">Timezone</label>
-            <select id="prof-tz" className="dash-select" value={timezone} onChange={(e) => setTimezone(e.target.value)}>
-              {tzOptions.map((opt) => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-          </div>
-          <div className="foundation-field" style={{ flex: '1 1 160px' }}>
-            <label htmlFor="prof-lang">Language</label>
-            <select
-              id="prof-lang"
-              className="dash-select"
-              value={preferredLang}
-              onChange={(e) => setPreferredLang(e.target.value as SupportedLang)}
-            >
-              <option value="en">English (en)</option>
-              <option value="id">Indonesian (id)</option>
-              <option value="zh_cn">Chinese Simplified (zh_cn)</option>
-            </select>
-          </div>
-          <div className="foundation-field" style={{ flex: '1 1 200px' }}>
-            <label htmlFor="prof-email-vis">Email display</label>
-            <select
-              id="prof-email-vis"
-              className="dash-select"
-              value={emailVisibility}
-              onChange={(e) => setEmailVisibility(e.target.value as EmailVisibility)}
-            >
-              <option value="hidden">Hide my email address</option>
-              <option value="course_participants">Allow course participants</option>
-              <option value="everyone">Visible to everyone</option>
-            </select>
-          </div>
-        </div>
+        <ProfilePreferenceSelects
+          timezone={timezone}
+          preferredLang={preferredLang}
+          emailVisibility={emailVisibility}
+          tzOptions={tzOptions}
+          onTimezoneChange={setTimezone}
+          onLangChange={setPreferredLang}
+          onEmailVisibilityChange={setEmailVisibility}
+        />
 
         <div className="sf-row" style={{ justifyContent: 'flex-end' }}>
           <button type="submit" className="sf-btn sf-btn--primary" disabled={saving}>

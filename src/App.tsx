@@ -53,18 +53,18 @@ const MessagesPage = lazy(() =>
 const UserProfilePage = lazy(() =>
   import('./pages/UserProfilePage.tsx').then((m) => ({ default: m.UserProfilePage })),
 )
-const WorkspacePreviewPage = lazy(() =>
-  import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
+const GradesOverviewPage = lazy(() =>
+  import('./pages/GradesOverviewPage.tsx').then((m) => ({ default: m.GradesOverviewPage })),
 )
-
-const PLANNED_ROUTES = [
-  { path: '/grades', title: 'Grades' },
-  { path: '/reports/analytics', title: 'Learning analytics' },
-  { path: '/reports/analytics/:key', title: 'Analytics detail' },
-  { path: '/reports/learner-script', title: 'Learning analytics' },
-  { path: '/reports/learner-script/:key', title: 'Analytics detail' },
-  { path: '/static/:slug', title: 'Guide page' },
-] as const
+const CourseGradebookPage = lazy(() =>
+  import('./pages/CourseGradebookPage.tsx').then((m) => ({ default: m.CourseGradebookPage })),
+)
+const AnalyticsReportsPage = lazy(() =>
+  import('./pages/AnalyticsReportsPage.tsx').then((m) => ({ default: m.AnalyticsReportsPage })),
+)
+const StaticGuidePage = lazy(() =>
+  import('./pages/StaticGuidePage.tsx').then((m) => ({ default: m.StaticGuidePage })),
+)
 
 function RouteFallback() {
   return (
@@ -105,6 +105,7 @@ function App() {
               <Route path="/search"><ProtectedRoute><SearchPage /></ProtectedRoute></Route>
               <Route path="/categories"><ProtectedRoute><CategoryExplorerPage /></ProtectedRoute></Route>
               <Route path="/categories/:id"><ProtectedRoute><CategoryExplorerPage /></ProtectedRoute></Route>
+              <Route path="/courses/:id/grades"><ProtectedRoute><CourseGradebookPage /></ProtectedRoute></Route>
               <Route path="/courses/:id"><ProtectedRoute><CourseDetailPage /></ProtectedRoute></Route>
               <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
@@ -116,13 +117,12 @@ function App() {
               <Route path="/messages/:id"><ProtectedRoute><MessagesPage /></ProtectedRoute></Route>
               <Route path="/user/files"><ProtectedRoute><PrivateFilesPage /></ProtectedRoute></Route>
               <Route path="/user/profile"><ProtectedRoute><UserProfilePage /></ProtectedRoute></Route>
-              {PLANNED_ROUTES.map((item) => (
-                <Route key={item.path} path={item.path}>
-                  <ProtectedRoute>
-                    <WorkspacePreviewPage title={item.title} />
-                  </ProtectedRoute>
-                </Route>
-              ))}
+              <Route path="/grades"><ProtectedRoute><GradesOverviewPage /></ProtectedRoute></Route>
+              <Route path="/reports/analytics"><ProtectedRoute><AnalyticsReportsPage /></ProtectedRoute></Route>
+              <Route path="/reports/analytics/:key"><ProtectedRoute><AnalyticsReportsPage /></ProtectedRoute></Route>
+              <Route path="/reports/learner-script"><ProtectedRoute><AnalyticsReportsPage /></ProtectedRoute></Route>
+              <Route path="/reports/learner-script/:key"><ProtectedRoute><AnalyticsReportsPage /></ProtectedRoute></Route>
+              <Route path="/static/:slug" component={StaticGuidePage} />
               <Route component={NotFoundView} />
             </Switch>
           </Suspense>

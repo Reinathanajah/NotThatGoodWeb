@@ -1,8 +1,8 @@
-import { ArrowLeft, Send } from 'lucide-react'
-import { type FormEvent, type KeyboardEvent, useState } from 'react'
+import { ArrowLeft } from 'lucide-react'
 import { formatDateTimeShort } from '../../lib/dateFormat.ts'
 import type { ConversationDetailDto } from '../../types/workspace.ts'
 import { StatusBanner } from '../ui/StatusBanner.tsx'
+import { MessageComposerForm } from './MessageComposerForm.tsx'
 
 interface ConversationThreadPanelProps {
   selectedId: string | null
@@ -33,32 +33,6 @@ export function ConversationThreadPanel({
   onLoadOlder,
   onSend,
 }: ConversationThreadPanelProps) {
-  const [draft, setDraft] = useState('')
-  const [localError, setLocalError] = useState<string | null>(null)
-
-  async function trySend() {
-    const trimmed = draft.trim()
-    if (!trimmed) {
-      setLocalError('Write a message before sending.')
-      return
-    }
-    setLocalError(null)
-    const ok = await onSend(trimmed)
-    if (ok) setDraft('')
-  }
-
-  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    void trySend()
-  }
-
-  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      void trySend()
-    }
-  }
-
   if (!selectedId) {
     return (
       <section className="sf-surface res-stage-card msg-mobile-hidden">
@@ -81,16 +55,13 @@ export function ConversationThreadPanel({
           <div className="sf-row" style={{ gap: 'var(--space-2)' }}>
             <strong>{thread.conversation.title ?? 'Direct messages'}</strong>
             {thread.participants.map((p) => (
-              <span key={p.id} className="sf-badge">
-                {p.fullName} ({p.role})
-              </span>
+              <span key={p.id} className="sf-badge">{p.fullName} ({p.role})</span>
             ))}
           </div>
         ) : null}
       </div>
 
       {error ? <StatusBanner variant="error" title="Message error" message={error} /> : null}
-
       {loading && !thread ? (
         <StatusBanner variant="loading" title="Loading conversation" skeletonLines={4} />
       ) : thread ? (
@@ -100,7 +71,6 @@ export function ConversationThreadPanel({
               Load more messages
             </button>
           ) : null}
-
           <div className="msg-stream">
             {thread.messages.map((msg) => {
               const mine = msg.sender.id === currentUserId
@@ -117,35 +87,7 @@ export function ConversationThreadPanel({
               )
             })}
           </div>
-
-          <form className="sf-stack" style={{ gap: 'var(--space-2)' }} onSubmit={handleFormSubmit}>
-            <label htmlFor="msg-composer" className="sf-text-muted" style={{ fontWeight: 600 }}>
-              Write a message (Enter sends, Shift+Enter adds a line)
-            </label>
-            <textarea
-              id="msg-composer"
-              className="assign-comment-textarea"
-              value={draft}
-              maxLength={4000}
-              disabled={sending}
-              onKeyDown={handleKeyDown}
-              onChange={(e) => {
-                setDraft(e.target.value)
-                if (localError) setLocalError(null)
-              }}
-            />
-            {localError ? (
-              <p className="foundation-field-error" role="alert">
-                {localError}
-              </p>
-            ) : null}
-            <div className="sf-row" style={{ justifyContent: 'flex-end' }}>
-              <button type="submit" className="sf-btn sf-btn--primary" disabled={sending}>
-                <Send size={16} aria-hidden="true" />
-                <span>{sending ? 'Sending...' : 'Send message'}</span>
-              </button>
-            </div>
-          </form>
+          <MessageComposerForm sending={sending} onSend={onSend} />
         </>
       ) : null}
     </section>

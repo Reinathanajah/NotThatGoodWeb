@@ -1,5 +1,31 @@
 import { getAssignmentWindowState } from '../lib/assignmentTime.ts'
+import { ApiClientError } from '../services/apiClient.ts'
+import type { StagedAttachment } from '../components/assignments/SubmissionFilesDropzone.tsx'
 import type { AssignmentDetailDto } from '../types/activities.ts'
+
+export function mapInitialAttachments(res: AssignmentDetailDto): StagedAttachment[] {
+  return res.submissionStatus.files.map((f) => ({
+    id: f.id,
+    name: f.displayName,
+    sizeBytes: f.sizeBytes,
+    license: f.license,
+  }))
+}
+
+export function extractSubmissionSaveErrors(err: unknown) {
+  if (err instanceof ApiClientError) {
+    return {
+      declarationError: err.getFieldError('declarationAccepted'),
+      filesError: err.getFieldError('fileIds'),
+      submitError: err.message,
+    }
+  }
+  return {
+    declarationError: null,
+    filesError: null,
+    submitError: err instanceof Error ? err.message : 'Unable to save submission',
+  }
+}
 
 export function deriveEditability(detail: AssignmentDetailDto | null) {
   const windowState = detail

@@ -8,10 +8,7 @@ import {
 } from '../services/assignmentsApi.ts'
 import type { AssignmentDetailDto, PlagiarismJobDto } from '../types/activities.ts'
 import { useAssignmentComments } from './useAssignmentComments.ts'
-
-function hasPendingScan(jobs: PlagiarismJobDto[]): boolean {
-  return jobs.some((job) => job.status === 'pending' || job.status === 'scanning')
-}
+import { hasPendingScan, usePlagiarismPolling } from './usePlagiarismPolling.ts'
 
 export function useAssignmentHub(moduleId: number) {
   const [trackedId, setTrackedId] = useState(moduleId)
@@ -69,21 +66,7 @@ export function useAssignmentHub(moduleId: number) {
     return () => window.clearInterval(timer)
   }, [])
 
-  const needsPolling = hasPendingScan(jobs)
-  useEffect(() => {
-    if (!needsPolling || loading) return
-    const controller = new AbortController()
-    const timer = window.setInterval(() => {
-      fetchPlagiarismStatus(moduleId, controller.signal).then(
-        (res) => setJobs(res.jobs),
-        () => undefined,
-      )
-    }, 3000)
-    return () => {
-      controller.abort()
-      window.clearInterval(timer)
-    }
-  }, [moduleId, needsPolling, loading])
+  usePlagiarismPolling(moduleId, hasPendingScan(jobs) && !loading, setJobs)
 
   const triggerScan = useCallback(async () => {
     if (!detail || scanning) return

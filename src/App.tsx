@@ -32,12 +32,14 @@ const ResourceViewerPage = lazy(() =>
 const AssignmentDetailPage = lazy(() =>
   import('./pages/AssignmentDetailPage.tsx').then((m) => ({ default: m.AssignmentDetailPage })),
 )
+const AssignmentEditorPage = lazy(() =>
+  import('./pages/AssignmentEditorPage.tsx').then((m) => ({ default: m.AssignmentEditorPage })),
+)
 const WorkspacePreviewPage = lazy(() =>
   import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
 )
 
 const PLANNED_ROUTES = [
-  { path: '/assignments/:moduleId/edit', title: 'Submission editor' },
   { path: '/quizzes/:moduleId', title: 'Quiz module' },
   { path: '/notifications', title: 'Notifications' },
   { path: '/messages', title: 'Messages' },
@@ -94,6 +96,7 @@ function App() {
               <Route path="/courses/:id"><ProtectedRoute><CourseDetailPage /></ProtectedRoute></Route>
               <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
+              <Route path="/assignments/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
               {PLANNED_ROUTES.map((item) => (
                 <Route key={item.path} path={item.path}>
                   <ProtectedRoute>

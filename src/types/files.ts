@@ -35,6 +35,14 @@ export interface PrivateFilesListingDto {
   entries: PrivateFileEntryDto[]
 }
 
+export interface WikimediaResultDto {
+  title: string
+  url: string
+  mimeType: string
+  license: FileLicense
+  author: string
+}
+
 export interface FilePickerSourcesDto {
   source: 'all' | 'recent' | 'private' | 'wikimedia'
   repositories: Array<{ id: string; label: string; writable: boolean }>
@@ -45,11 +53,25 @@ export interface FilePickerSourcesDto {
   }
   recentFiles: StoredFileMetaDto[]
   privateFiles: PrivateFileEntryDto[]
-  wikimediaResults: Array<{
-    title: string
-    url: string
-    mimeType: string
-    license: FileLicense
-    author: string
-  }>
+  wikimediaResults: WikimediaResultDto[]
+}
+
+export interface UploadFileInput {
+  file: Blob
+  filename: string
+  saveAs?: string
+  author?: string
+  license: FileLicense
+  target: 'private' | 'submission_draft'
+  parentFolderId?: string
+}
+
+export interface UploadFileResultDto {
+  file: StoredFileMetaDto
+  privateEntry: PrivateFileEntryDto | null
+  quota: {
+    quotaBytes: number
+    usedBytes: number
+    remainingBytes: number
+  }
 }

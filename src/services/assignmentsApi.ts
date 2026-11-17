@@ -2,6 +2,7 @@ import type {
   AssignmentDetailDto,
   PlagiarismStatusResponseDto,
   SubmissionCommentDto,
+  UpsertSubmissionInput,
 } from '../types/activities.ts'
 import { apiDownloadBlob } from './apiBinary.ts'
 import { apiFetch } from './apiClient.ts'
@@ -12,6 +13,16 @@ export function fetchAssignmentDetail(
   signal?: AbortSignal,
 ): Promise<AssignmentDetailDto> {
   return apiFetch<AssignmentDetailDto>(`/assignments/${moduleId}`, { signal })
+}
+
+export function upsertAssignmentSubmission(
+  moduleId: number,
+  input: UpsertSubmissionInput,
+): Promise<AssignmentDetailDto> {
+  return apiFetch<AssignmentDetailDto>(`/assignments/${moduleId}/submission`, {
+    method: 'PUT',
+    body: input,
+  })
 }
 
 export function fetchAssignmentComments(

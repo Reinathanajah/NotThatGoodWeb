@@ -35,6 +35,9 @@ const AssignmentDetailPage = lazy(() =>
 const AssignmentEditorPage = lazy(() =>
   import('./pages/AssignmentEditorPage.tsx').then((m) => ({ default: m.AssignmentEditorPage })),
 )
+const PrivateFilesPage = lazy(() =>
+  import('./pages/PrivateFilesPage.tsx').then((m) => ({ default: m.PrivateFilesPage })),
+)
 const WorkspacePreviewPage = lazy(() =>
   import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
 )
@@ -49,7 +52,6 @@ const PLANNED_ROUTES = [
   { path: '/reports/analytics/:key', title: 'Analytics detail' },
   { path: '/reports/learner-script', title: 'Learning analytics' },
   { path: '/reports/learner-script/:key', title: 'Analytics detail' },
-  { path: '/user/files', title: 'Private files' },
   { path: '/user/profile', title: 'User profile' },
   { path: '/static/:slug', title: 'Guide page' },
 ] as const
@@ -97,6 +99,7 @@ function App() {
               <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
+              <Route path="/user/files"><ProtectedRoute><PrivateFilesPage /></ProtectedRoute></Route>
               {PLANNED_ROUTES.map((item) => (
                 <Route key={item.path} path={item.path}>
                   <ProtectedRoute>

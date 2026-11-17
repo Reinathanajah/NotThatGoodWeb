@@ -34,6 +34,7 @@ export async function listPrivateFiles(
         fileAuthorName: fileObjects.authorName,
         fileLicense: fileObjects.license,
         fileUploadedAt: fileObjects.uploadedAt,
+        fileSha256: fileObjects.sha256,
       })
       .from(privateFiles)
       .leftJoin(fileObjects, eq(privateFiles.fileObjectId, fileObjects.id))
@@ -67,6 +68,7 @@ export async function listPrivateFiles(
           authorName: row.fileAuthorName,
           license: row.fileLicense,
           uploadedAt: row.fileUploadedAt,
+          sha256: row.fileSha256,
           downloadUrl: `/api/v1/files/${row.fileObjectId}/download`,
         }
       : null,

@@ -9,6 +9,7 @@ export interface StoredFileMetaDto {
   authorName: string | null
   license: FileLicense
   uploadedAt: string
+  sha256?: string | null
   downloadUrl: string
 }
 

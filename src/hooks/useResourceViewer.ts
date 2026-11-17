@@ -1,29 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { setCourseModuleCompletion } from '../services/coursesApi.ts'
-import {
-  fetchResourceBinary,
-  fetchResourceDetail,
-  saveBlobToDisk,
-} from '../services/resourcesApi.ts'
+import { fetchResourceBinary, fetchResourceDetail, saveBlobToDisk } from '../services/resourcesApi.ts'
 import type { ResourceDetailDto } from '../types/courses.ts'
-
-function canInlinePreview(mimeType: string) {
-  return (
-    mimeType.includes('pdf') ||
-    mimeType.startsWith('text/html') ||
-    mimeType.startsWith('image/')
-  )
-}
+import { useResourcePreview } from './useResourcePreview.ts'
 
 export function useResourceViewer(moduleId: number) {
   const [trackedId, setTrackedId] = useState(moduleId)
   const [detail, setDetail] = useState<ResourceDetailDto | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [previewLoading, setPreviewLoading] = useState(false)
-  const [previewError, setPreviewError] = useState<string | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [htmlContent, setHtmlContent] = useState<string | null>(null)
   const [togglingComplete, setTogglingComplete] = useState(false)
   const [downloading, setDownloading] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
@@ -34,45 +19,17 @@ export function useResourceViewer(moduleId: number) {
     setDetail(null)
     setLoading(true)
     setError(null)
-    setPreviewLoading(false)
-    setPreviewError(null)
-    setPreviewUrl(null)
-    setHtmlContent(null)
     setActionError(null)
   }
 
   useEffect(() => {
     const controller = new AbortController()
-    let createdUrl: string | null = null
-
     fetchResourceDetail(moduleId, controller.signal).then(
       (payload) => {
         if (controller.signal.aborted) return
         setDetail(payload)
         setError(null)
         setLoading(false)
-
-        const file = payload.file
-        if (!file || !canInlinePreview(file.mimeType)) return
-        setPreviewLoading(true)
-
-        fetchResourceBinary(payload.moduleId, 'inline', file.originalName, controller.signal).then(
-          async ({ blob, mimeType }) => {
-            if (controller.signal.aborted) return
-            if (mimeType.startsWith('text/html')) {
-              setHtmlContent(await blob.text())
-            } else {
-              createdUrl = URL.createObjectURL(blob)
-              setPreviewUrl(createdUrl)
-            }
-            setPreviewLoading(false)
-          },
-          (err: unknown) => {
-            if (controller.signal.aborted) return
-            setPreviewError(err instanceof Error ? err.message : 'Unable to render resource preview')
-            setPreviewLoading(false)
-          },
-        )
       },
       (err: unknown) => {
         if (controller.signal.aborted) return
@@ -80,12 +37,10 @@ export function useResourceViewer(moduleId: number) {
         setLoading(false)
       },
     )
-
-    return () => {
-      controller.abort()
-      if (createdUrl) URL.revokeObjectURL(createdUrl)
-    }
+    return () => controller.abort()
   }, [moduleId, nonce])
+
+  const preview = useResourcePreview(detail, nonce)
 
   const downloadAttachment = useCallback(async () => {
     if (!detail?.file || downloading) return
@@ -128,10 +83,7 @@ export function useResourceViewer(moduleId: number) {
     detail,
     loading,
     error,
-    previewLoading,
-    previewError,
-    previewUrl,
-    htmlContent,
+    ...preview,
     togglingComplete,
     downloading,
     actionError,
@@ -140,10 +92,6 @@ export function useResourceViewer(moduleId: number) {
     retry: () => {
       setLoading(true)
       setError(null)
-      setPreviewLoading(false)
-      setPreviewError(null)
-      setPreviewUrl(null)
-      setHtmlContent(null)
       setNonce((n) => n + 1)
     },
   }

@@ -1,6 +1,7 @@
 import { formatBytes } from '../../lib/formatBytes.ts'
 import type { ResourceDetailDto } from '../../types/courses.ts'
 import { StatusBanner } from '../ui/StatusBanner.tsx'
+import { ResourceUrlPanel } from './ResourceUrlPanel.tsx'
 
 interface ResourcePreviewStageProps {
   detail: ResourceDetailDto
@@ -23,6 +24,10 @@ export function ResourcePreviewStage({
   onDownload,
   onRetry,
 }: ResourcePreviewStageProps) {
+  if (detail.resourceKind === 'url') {
+    return <ResourceUrlPanel detail={detail} />
+  }
+
   const file = detail.file
   if (!file) {
     return (
@@ -53,7 +58,7 @@ export function ResourcePreviewStage({
   if (htmlContent !== null) {
     return (
       <section className="sf-surface res-stage-card sf-stack" aria-label="Interactive HTML simulation">
-        <div className="sf-row" style={{ justifyContent: 'space-between' }}>
+        <div className="dash-controls">
           <span className="sf-text-muted">
             Sandboxed HTML simulation ({file.originalName} · {formatBytes(file.sizeBytes)})
           </span>
@@ -79,7 +84,7 @@ export function ResourcePreviewStage({
   if (previewUrl && file.mimeType.includes('pdf')) {
     return (
       <section className="sf-surface res-stage-card sf-stack" aria-label="PDF document preview">
-        <div className="sf-row" style={{ justifyContent: 'space-between' }}>
+        <div className="dash-controls">
           <span className="sf-text-muted">
             PDF viewer ({file.originalName} · {formatBytes(file.sizeBytes)})
           </span>
@@ -95,13 +100,27 @@ export function ResourcePreviewStage({
   if (previewUrl && file.mimeType.startsWith('image/')) {
     return (
       <section className="sf-surface res-stage-card" aria-label="Image preview">
-        <img
-          src={previewUrl}
-          alt={detail.title}
-          width={800}
-          height={520}
-          className="res-preview-image"
-        />
+        <img src={previewUrl} alt={detail.title} width={800} height={520} className="res-preview-image" />
+      </section>
+    )
+  }
+
+  if (previewUrl && file.mimeType.startsWith('video/')) {
+    return (
+      <section className="sf-surface res-stage-card" aria-label="Video player">
+        <video src={previewUrl} controls className="res-preview-image" style={{ width: '100%' }}>
+          Your browser does not support video playback.
+        </video>
+      </section>
+    )
+  }
+
+  if (previewUrl && file.mimeType.startsWith('audio/')) {
+    return (
+      <section className="sf-surface res-stage-card" aria-label="Audio player">
+        <audio src={previewUrl} controls style={{ width: '100%' }}>
+          Your browser does not support audio playback.
+        </audio>
       </section>
     )
   }
@@ -112,12 +131,7 @@ export function ResourcePreviewStage({
         Inline browser preview is not supported for {file.mimeType} ({formatBytes(file.sizeBytes)}).
       </p>
       <div>
-        <button
-          type="button"
-          className="sf-btn sf-btn--primary"
-          disabled={downloading}
-          onClick={onDownload}
-        >
+        <button type="button" className="sf-btn sf-btn--primary" disabled={downloading} onClick={onDownload}>
           {downloading ? 'Downloading...' : `Download ${file.originalName}`}
         </button>
       </div>

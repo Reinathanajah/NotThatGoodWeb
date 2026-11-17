@@ -1,9 +1,9 @@
-import { ClipboardCheck, ExternalLink, FileText, FileUp, Info, Link2 } from 'lucide-react'
+import { ClipboardCheck, FileText, FileUp, Info, Link2 } from 'lucide-react'
 import { Link } from 'wouter'
 import { useAuth } from '../../context/authContextValue.ts'
 import { resolveModuleHref } from '../../lib/appRoutes.ts'
 import { formatDateTimeShort } from '../../lib/dateFormat.ts'
-import { formatBytes, isSafeHttpUrl } from '../../lib/formatBytes.ts'
+import { formatBytes } from '../../lib/formatBytes.ts'
 import type { CourseModuleDto } from '../../types/courses.ts'
 import { SafeHtmlBlock } from '../ui/SafeHtmlBlock.tsx'
 
@@ -51,7 +51,6 @@ export function CourseModuleRow({
     )
   }
 
-  const safeExternalUrl = mod.moduleType === 'url' ? isSafeHttpUrl(mod.externalUrl) : null
   const internalHref = resolveModuleHref({ ...mod, courseId })
   const resourceMeta = buildResourceMeta(mod, tz)
 
@@ -60,21 +59,9 @@ export function CourseModuleRow({
       <div className="sf-stack" style={{ gap: '6px', flex: '1 1 280px' }}>
         <div className="sf-row" style={{ gap: 'var(--space-2)' }}>
           <Icon size={18} color="var(--accent)" aria-hidden="true" />
-          {safeExternalUrl ? (
-            <a
-              href={safeExternalUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="course-mod-title"
-            >
-              <span>{mod.title}</span>
-              <ExternalLink size={15} aria-hidden="true" />
-            </a>
-          ) : (
-            <Link href={internalHref} className="course-mod-title">
-              {mod.title}
-            </Link>
-          )}
+          <Link href={internalHref} className="course-mod-title">
+            {mod.title}
+          </Link>
         </div>
 
         <p className="sf-text-muted tabular-nums">

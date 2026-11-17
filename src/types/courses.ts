@@ -1,4 +1,4 @@
-import type { AdjacentModulesDto, BreadcrumbDto, CategorySummaryDto } from './api.ts'
+import type { BreadcrumbDto, CategorySummaryDto } from './api.ts'
 
 export interface TimelineItemDto {
   moduleId: number
@@ -127,24 +127,4 @@ export interface CourseDetailDto {
   sections: CourseSectionDto[]
 }
 
-export interface ResourceDetailDto {
-  moduleId: number
-  moodleModuleId: number | null
-  title: string
-  subsectionLabel: string | null
-  descriptionHtml: string | null
-  resourceKind: string
-  displayMode: string
-  isCompleted: boolean
-  completedAt: string | null
-  course: { id: number; moodleCourseId: number | null; code: string; title: string }
-  section: { id: number; title: string; position: number } | null
-  file:
-    | (CourseModuleResourceFileDto & {
-        authorName: string | null
-        license: string
-        downloadUrl: string
-      })
-    | null
-  navigation: AdjacentModulesDto
-}
+export type { ResourceDetailDto } from './resources.ts'

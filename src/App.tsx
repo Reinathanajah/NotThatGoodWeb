@@ -107,10 +107,16 @@ function App() {
               <Route path="/categories/:id"><ProtectedRoute><CategoryExplorerPage /></ProtectedRoute></Route>
               <Route path="/courses/:id/grades"><ProtectedRoute><CourseGradebookPage /></ProtectedRoute></Route>
               <Route path="/courses/:id"><ProtectedRoute><CourseDetailPage /></ProtectedRoute></Route>
+              <Route path="/course/:id/grades"><ProtectedRoute><CourseGradebookPage /></ProtectedRoute></Route>
+              <Route path="/course/:id"><ProtectedRoute><CourseDetailPage /></ProtectedRoute></Route>
               <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
+              <Route path="/mod/resource/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
+              <Route path="/mod/assign/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
+              <Route path="/mod/assign/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
               <Route path="/quizzes/:moduleId"><ProtectedRoute><QuizPage /></ProtectedRoute></Route>
+              <Route path="/mod/quiz/:moduleId"><ProtectedRoute><QuizPage /></ProtectedRoute></Route>
               <Route path="/calendar"><ProtectedRoute><CalendarPage /></ProtectedRoute></Route>
               <Route path="/notifications"><ProtectedRoute><NotificationsPage /></ProtectedRoute></Route>
               <Route path="/messages"><ProtectedRoute><MessagesPage /></ProtectedRoute></Route>

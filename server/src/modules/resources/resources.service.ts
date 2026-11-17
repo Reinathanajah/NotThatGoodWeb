@@ -16,7 +16,8 @@ import {
 
 async function loadAuthorizedResource(userId: string, rawModuleId: number) {
   const mod = await resolveCourseModuleByIdOrMoodleId(rawModuleId)
-  if (!mod.visible || mod.moduleType !== 'resource') {
+  const supportedType = mod.moduleType === 'resource' || mod.moduleType === 'url'
+  if (!mod.visible || !supportedType) {
     throw new NotFoundError('Resource module not found')
   }
 
@@ -61,7 +62,7 @@ async function loadAuthorizedResource(userId: string, rawModuleId: number) {
     resolveAdjacentModules(course.id, mod.id),
   ])
 
-  if (!resourceRow) {
+  if (mod.moduleType === 'resource' && !resourceRow) {
     throw new NotFoundError('Resource metadata not found')
   }
 
@@ -78,8 +79,9 @@ export async function getResourceDetail(userId: string, rawModuleId: number) {
     title: mod.title,
     subsectionLabel: mod.subsectionLabel,
     descriptionHtml: mod.descriptionHtml,
-    resourceKind: resourceRow.resourceKind,
-    displayMode: resourceRow.displayMode,
+    resourceKind: mod.moduleType === 'url' ? 'url' : resourceRow!.resourceKind,
+    displayMode: mod.moduleType === 'url' ? 'external' : resourceRow!.displayMode,
+    externalUrl: mod.externalUrl ?? null,
     isCompleted: Boolean(completionRow),
     completedAt: completionRow?.completedAt ?? null,
     course: {
@@ -89,7 +91,7 @@ export async function getResourceDetail(userId: string, rawModuleId: number) {
       title: course.title,
     },
     section: sectionRow ?? null,
-    file: resourceRow.file?.id
+    file: resourceRow?.file?.id
       ? {
           id: resourceRow.file.id,
           originalName: resourceRow.file.originalName,
@@ -108,7 +110,7 @@ export async function getResourceDetail(userId: string, rawModuleId: number) {
 
 export async function getResourceDownloadPayload(userId: string, rawModuleId: number) {
   const { resourceRow } = await loadAuthorizedResource(userId, rawModuleId)
-  const file = resourceRow.file
+  const file = resourceRow?.file
   if (!file || !file.id) {
     throw new NotFoundError('Resource file attachment not found')
   }

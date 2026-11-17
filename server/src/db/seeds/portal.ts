@@ -1,6 +1,16 @@
-import { count, sql } from 'drizzle-orm'
+import { count, eq, sql } from 'drizzle-orm'
 import { db } from '../index.js'
 import { learnerScriptReports, navigationItems, staticPages } from '../schema.js'
+
+const NAV_REWRITES: Array<{ label: string; href: string }> = [
+  { label: 'Course Archive', href: '/categories' },
+  { label: 'Platform User Manual', href: '/static/platform_guides' },
+  { label: 'Academic Portal', href: '/my' },
+  {
+    label: 'Course Creation & Enrollment Request (Instructors)',
+    href: '/static/platform_guides#instructor',
+  },
+]
 
 export async function seedPortalAndNavigation() {
   const [{ value: existingNavCount }] = await db.select({ value: count() }).from(navigationItems)
@@ -22,6 +32,13 @@ export async function seedPortalAndNavigation() {
         sortOrder: 1,
       },
     ])
+  } else {
+    for (const item of NAV_REWRITES) {
+      await db
+        .update(navigationItems)
+        .set({ href: item.href, isExternal: false })
+        .where(eq(navigationItems.label, item.label))
+    }
   }
 
   await db

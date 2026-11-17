@@ -16,6 +16,6 @@ export function resolveModuleHref(mod: {
   const targetId = mod.moodleModuleId ?? mod.moduleId ?? mod.id ?? 0
   if (mod.moduleType === 'assign') return `/assignments/${targetId}`
   if (mod.moduleType === 'quiz') return `/quizzes/${targetId}`
-  if (mod.moduleType === 'resource') return `/resources/${targetId}`
+  if (mod.moduleType === 'resource' || mod.moduleType === 'url') return `/resources/${targetId}`
   return mod.courseId ? `/courses/${mod.courseId}` : '/my'
 }

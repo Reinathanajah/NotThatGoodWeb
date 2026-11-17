@@ -7,7 +7,7 @@ export const pool = new Pool({
   connectionString: env.DATABASE_URL,
   max: 10,
   idleTimeoutMillis: 30_000,
-  connectionTimeoutMillis: 10_000,
+  connectionTimeoutMillis: 20_000,
   ssl: env.DATABASE_URL.includes('localhost') ? undefined : { rejectUnauthorized: false },
 })
 

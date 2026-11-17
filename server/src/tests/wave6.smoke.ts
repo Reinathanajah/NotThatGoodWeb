@@ -7,6 +7,11 @@ import {
   moduleCompletions,
 } from '../db/schema.js'
 import {
+  prepareUpcomingAssignmentWindow,
+  restoreAssignmentWindow,
+  type AssignmentWindowBackup,
+} from './helpers/assignmentWindow.js'
+import {
   loginAccount,
   logoutAccount,
   requestJson,
@@ -17,6 +22,7 @@ import { verifyAssignmentValidationAndSubmit } from './suites/assignmentsFlow.su
 void withTestServer('Wave 6', async (baseUrl) => {
   let studentId: string | null = null
   let authHeaders: Record<string, string> | null = null
+  let windowBackup: AssignmentWindowBackup | null = null
 
   try {
     assert.equal((await requestJson(baseUrl, '/assignments/3213297')).status, 401)
@@ -25,6 +31,7 @@ void withTestServer('Wave 6', async (baseUrl) => {
     const login = await loginAccount(baseUrl, 'student.demo')
     studentId = login.user.id
     authHeaders = login.headers
+    windowBackup = await prepareUpcomingAssignmentWindow(3213297, studentId)
 
     const cs2 = await requestJson<{
       title: string
@@ -88,6 +95,7 @@ void withTestServer('Wave 6', async (baseUrl) => {
     assert.ok(commentsList.body.data?.some((c) => c.body.includes('problem 15.7')))
     console.log('PASS GET & POST /assignments/:moduleId/comments')
   } finally {
+    await restoreAssignmentWindow(windowBackup)
     if (studentId) {
       const [mlsMod] = await db
         .select({ id: courseModules.id })

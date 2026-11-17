@@ -1,0 +1,119 @@
+@layer components {
+  .quiz-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .quiz-attempts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .quiz-attempts-table th,
+  .quiz-attempts-table td {
+    padding: var(--space-3);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+  }
+
+  .quiz-attempts-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .quiz-runner-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  @media (min-width: 860px) {
+    .quiz-runner-grid {
+      grid-template-columns: 240px minmax(0, 1fr);
+    }
+  }
+
+  .quiz-q-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: var(--space-2);
+  }
+
+  .quiz-q-btn {
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    padding: 0 var(--space-2);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .quiz-q-btn--answered {
+    background-color: var(--bg-surface-raised);
+    border-color: var(--status-success);
+  }
+
+  .quiz-q-btn[aria-current='step'] {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .quiz-options-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .quiz-option-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-min);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .quiz-option-card:has(input:checked) {
+    border-color: var(--accent);
+    background-color: var(--bg-surface-raised);
+  }
+
+  .quiz-option-card input {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+  }
+
+  .quiz-review-item {
+    padding: var(--space-4);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .quiz-review-item--correct {
+    border-left-color: var(--status-success);
+  }
+
+  .quiz-review-item--wrong {
+    border-left-color: var(--status-error);
+  }
+}

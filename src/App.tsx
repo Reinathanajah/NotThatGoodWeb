@@ -38,12 +38,14 @@ const AssignmentEditorPage = lazy(() =>
 const PrivateFilesPage = lazy(() =>
   import('./pages/PrivateFilesPage.tsx').then((m) => ({ default: m.PrivateFilesPage })),
 )
+const QuizPage = lazy(() =>
+  import('./pages/QuizPage.tsx').then((m) => ({ default: m.QuizPage })),
+)
 const WorkspacePreviewPage = lazy(() =>
   import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
 )
 
 const PLANNED_ROUTES = [
-  { path: '/quizzes/:moduleId', title: 'Quiz module' },
   { path: '/notifications', title: 'Notifications' },
   { path: '/messages', title: 'Messages' },
   { path: '/calendar', title: 'Academic calendar' },
@@ -99,6 +101,7 @@ function App() {
               <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId"><ProtectedRoute><AssignmentDetailPage /></ProtectedRoute></Route>
               <Route path="/assignments/:moduleId/edit"><ProtectedRoute><AssignmentEditorPage /></ProtectedRoute></Route>
+              <Route path="/quizzes/:moduleId"><ProtectedRoute><QuizPage /></ProtectedRoute></Route>
               <Route path="/user/files"><ProtectedRoute><PrivateFilesPage /></ProtectedRoute></Route>
               {PLANNED_ROUTES.map((item) => (
                 <Route key={item.path} path={item.path}>

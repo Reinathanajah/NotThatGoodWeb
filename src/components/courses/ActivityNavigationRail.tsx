@@ -1,3 +1,4 @@
+import '../resources/resources.css'
 import { Link } from 'wouter'
 import { resolveCourseHref, resolveModuleHref } from '../../lib/appRoutes.ts'
 import type { AdjacentModulesDto } from '../../types/api.ts'

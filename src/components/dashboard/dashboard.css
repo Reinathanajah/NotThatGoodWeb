@@ -40,38 +40,6 @@
     padding: clamp(1.125rem, 2.5vw, 1.75rem);
   }
 
-  .dash-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-
-  .dash-select {
-    min-height: var(--tap-min);
-    padding: 0 var(--space-3);
-    border: 1px solid var(--border-control);
-    border-radius: var(--radius-sm);
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-
-  .dash-search-input {
-    min-height: var(--tap-min);
-    min-width: min(260px, 100%);
-    padding: 0 var(--space-3);
-    border: 1px solid var(--border-control);
-    border-radius: var(--radius-sm);
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: var(--text-body);
-  }
-
   .timeline-group-heading {
     font-size: var(--text-body);
     font-weight: 700;
@@ -99,13 +67,6 @@
   }
 
   @media (max-width: 600px) {
-    .dash-controls > .sf-row,
-    .dash-controls .sf-stack,
-    .dash-select,
-    .dash-search-input {
-      width: 100%;
-    }
-
     .timeline-row {
       grid-template-columns: minmax(0, 1fr);
     }

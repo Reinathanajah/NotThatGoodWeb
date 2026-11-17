@@ -14,12 +14,29 @@ export interface AssignmentFileDto {
 
 export interface PlagiarismJobDto {
   id: string
-  submissionId: string
+  submissionId?: string
+  fileObjectId: string
+  fileName?: string
   provider: string
+  externalDocumentId: string | null
   status: 'pending' | 'scanning' | 'completed' | 'failed'
-  similarityPercent: number | null
-  reportSummary: string | null
+  similarityPercent: string | number | null
+  reportUrl: string | null
+  createdAt?: string
   updatedAt: string
+}
+
+export interface PlagiarismStatusResponseDto {
+  assignmentModuleId: number
+  submissionId?: string
+  provider: string | null
+  jobs: PlagiarismJobDto[]
+}
+
+export interface AssignmentTimeRemainingDto {
+  secondsRemaining: number
+  isOverdue: boolean
+  humanReadable: string
 }
 
 export interface AssignmentDetailDto {
@@ -38,7 +55,7 @@ export interface AssignmentDetailDto {
     submissionStatementText: string | null
     plagiarismProvider: string | null
     maxAttempts: number
-    maxGrade: number
+    maxGrade: number | string
   }
   course: { id: number; moodleCourseId: number | null; code: string; title: string }
   section: { id: number; title: string; position: number } | null
@@ -53,7 +70,7 @@ export interface AssignmentDetailDto {
     declarationAcceptedAt: string | null
     submittedAt: string | null
     lastModifiedAt: string | null
-    timeRemaining: { isOverdue: boolean; label: string; seconds: number }
+    timeRemaining: AssignmentTimeRemainingDto
     files: AssignmentFileDto[]
     commentCount: number
     grade: { score: string; maxGrade: string; feedback: string | null; gradedAt: string | null } | null

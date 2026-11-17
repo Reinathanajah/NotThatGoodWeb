@@ -1,4 +1,4 @@
-import './courses.css'
+﻿import './courses.css'
 import { useEffect, useState } from 'react'
 import { Link } from 'wouter'
 import { useAuth } from '../../context/authContextValue.ts'

@@ -1,5 +1,10 @@
 import type { PaginationMeta } from '../types/api.ts'
-import type { CourseSummaryDto, RecentCourseDto } from '../types/courses.ts'
+import type {
+  CourseCompletionDto,
+  CourseDetailDto,
+  CourseSummaryDto,
+  RecentCourseDto,
+} from '../types/courses.ts'
 import { apiFetch, apiFetchWithMeta } from './apiClient.ts'
 
 export type CourseFilter = 'all' | 'in_progress' | 'future' | 'past' | 'starred' | 'hidden'
@@ -59,4 +64,37 @@ export function updateCoursePreference(
     method: 'PATCH',
     body: patch,
   })
+}
+
+export function fetchCourseDetail(
+  courseId: number,
+  signal?: AbortSignal,
+): Promise<CourseDetailDto> {
+  return apiFetch<CourseDetailDto>(`/courses/${courseId}`, { signal })
+}
+
+export function recordCourseAccess(courseId: number): Promise<{ lastAccessedAt: string }> {
+  return apiFetch<{ lastAccessedAt: string }>(`/courses/${courseId}/access`, {
+    method: 'POST',
+  })
+}
+
+export interface ModuleCompletionResultDto {
+  courseId: number
+  moduleId: number
+  moodleModuleId: number | null
+  isCompleted: boolean
+  completedAt: string | null
+  courseCompletion: CourseCompletionDto
+}
+
+export function setCourseModuleCompletion(
+  courseId: number,
+  moduleId: number,
+  completed: boolean,
+): Promise<ModuleCompletionResultDto> {
+  return apiFetch<ModuleCompletionResultDto>(
+    `/courses/${courseId}/modules/${moduleId}/complete`,
+    { method: completed ? 'POST' : 'DELETE' },
+  )
 }

@@ -23,13 +23,17 @@ const SearchPage = lazy(() =>
 const CategoryExplorerPage = lazy(() =>
   import('./pages/CategoryExplorerPage.tsx').then((m) => ({ default: m.CategoryExplorerPage })),
 )
+const CourseDetailPage = lazy(() =>
+  import('./pages/CourseDetailPage.tsx').then((m) => ({ default: m.CourseDetailPage })),
+)
+const ResourceViewerPage = lazy(() =>
+  import('./pages/ResourceViewerPage.tsx').then((m) => ({ default: m.ResourceViewerPage })),
+)
 const WorkspacePreviewPage = lazy(() =>
   import('./pages/WorkspacePreviewPage.tsx').then((m) => ({ default: m.WorkspacePreviewPage })),
 )
 
 const PLANNED_ROUTES = [
-  { path: '/courses/:id', title: 'Course view' },
-  { path: '/resources/:moduleId', title: 'Resource viewer' },
   { path: '/assignments/:moduleId', title: 'Assignment module' },
   { path: '/quizzes/:moduleId', title: 'Quiz module' },
   { path: '/notifications', title: 'Notifications' },
@@ -84,6 +88,8 @@ function App() {
               <Route path="/search"><ProtectedRoute><SearchPage /></ProtectedRoute></Route>
               <Route path="/categories"><ProtectedRoute><CategoryExplorerPage /></ProtectedRoute></Route>
               <Route path="/categories/:id"><ProtectedRoute><CategoryExplorerPage /></ProtectedRoute></Route>
+              <Route path="/courses/:id"><ProtectedRoute><CourseDetailPage /></ProtectedRoute></Route>
+              <Route path="/resources/:moduleId"><ProtectedRoute><ResourceViewerPage /></ProtectedRoute></Route>
               {PLANNED_ROUTES.map((item) => (
                 <Route key={item.path} path={item.path}>
                   <ProtectedRoute>

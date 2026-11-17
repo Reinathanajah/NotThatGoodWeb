@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+﻿import { useEffect, useState, type FormEvent } from 'react'
 import { useAuth } from '../../context/authContextValue.ts'
 import { useI18n } from '../../context/i18nContextValue.ts'
 import { formatDateTimeShort } from '../../lib/dateFormat.ts'
@@ -36,7 +36,7 @@ export function TimezoneClockPanel() {
           setDeltaMs(serverMs - Date.now())
         }
       },
-      () => {},
+      () => { },
     )
     const timer = window.setInterval(() => setNowMs(Date.now()), 1000)
     return () => {

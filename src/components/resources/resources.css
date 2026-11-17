@@ -1,0 +1,62 @@
+@layer components {
+  .res-stage-card {
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .res-preview-frame {
+    width: 100%;
+    height: clamp(440px, 72dvh, 840px);
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+  }
+
+  .res-preview-image {
+    max-width: 100%;
+    max-height: 75dvh;
+    width: auto;
+    height: auto;
+    margin-inline: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .res-rail {
+    padding: var(--space-3) var(--space-4);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .res-rail-slot {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .res-rail-slot a {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .res-rail {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
+    .res-rail-slot--start {
+      justify-content: flex-start;
+    }
+
+    .res-rail-slot--center {
+      justify-content: center;
+    }
+
+    .res-rail-slot--end {
+      justify-content: flex-end;
+    }
+  }
+}

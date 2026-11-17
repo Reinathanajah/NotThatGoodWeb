@@ -1,4 +1,4 @@
-import { ClipboardCheck, FileUp } from 'lucide-react'
+﻿import { ClipboardCheck, FileUp } from 'lucide-react'
 import { Link } from 'wouter'
 import { useI18n } from '../../context/i18nContextValue.ts'
 import { formatTime24 } from '../../lib/dateFormat.ts'

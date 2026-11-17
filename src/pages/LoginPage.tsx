@@ -27,7 +27,7 @@ export function LoginPage() {
 
   useEffect(() => {
     const controller = new AbortController()
-    fetchSupportStatus(controller.signal).then(setSupport, () => {})
+    fetchSupportStatus(controller.signal).then(setSupport, () => { })
     return () => controller.abort()
   }, [])
 

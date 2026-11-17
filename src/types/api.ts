@@ -57,7 +57,7 @@ export interface AdjacentModuleLink {
 }
 
 export interface AdjacentModulesDto {
-  prevModule: AdjacentModuleLink | null
-  nextModule: AdjacentModuleLink | null
-  courseUrl: string
+  courseId: number
+  prev: AdjacentModuleLink | null
+  next: AdjacentModuleLink | null
 }

@@ -1,4 +1,4 @@
-import { Link } from 'wouter'
+﻿import { Link } from 'wouter'
 import { resolveCourseHref } from '../../lib/appRoutes.ts'
 import type { CourseView } from '../../services/coursesApi.ts'
 import type { CourseSummaryDto } from '../../types/courses.ts'

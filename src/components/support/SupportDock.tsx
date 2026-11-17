@@ -19,7 +19,7 @@ export function SupportDock() {
 
   useEffect(() => {
     const controller = new AbortController()
-    fetchSupportStatus(controller.signal).then(setStatus, () => {})
+    fetchSupportStatus(controller.signal).then(setStatus, () => { })
     return () => controller.abort()
   }, [])
 

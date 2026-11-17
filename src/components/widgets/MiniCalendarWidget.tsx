@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+﻿import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'wouter'
 import { useAuth } from '../../context/authContextValue.ts'
@@ -36,7 +36,7 @@ export function MiniCalendarWidget({ onNavigate }: { onNavigate?: () => void }) 
     const controller = new AbortController()
     fetchCalendarEvents({ view: 'month', year, month }, controller.signal).then(
       setData,
-      () => {},
+      () => { },
     )
     return () => controller.abort()
   }, [year, month])
